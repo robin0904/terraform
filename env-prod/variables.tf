@@ -27,3 +27,9 @@ variable "task_definitions" {
     tags = optional(map(string))
   }))
 }
+
+variable "cluster_name" {
+  description = "Name of the ECS Cluster"
+  type        = string
+  default     = "Property-Share-Prod"
+}

@@ -238,3 +238,35 @@ module "ecs_task_definitions" {
     lookup(var.task_definitions[count.index], "tags", {})
   )
 }
+
+# Creating ECS Cluster
+module "ecs_cluster" {
+  source = "../modules/ecs-cluster"
+
+  cluster_name = var.cluster_name
+  container_insights = true
+}
+
+locals {
+  # Explicitly map service names to ports
+  container_ports = {
+    "service-1"  = 80
+    "service-2"  = 80
+    "service-3"  = 80
+    "service-4"  = 80
+    # ... and so on
+  }
+}
+
+# module "ecs-service" {
+#   source = "../modules/ecs-service-prod-web-alb"
+#   private_subnet_ids = module.vpc.private_subnet_ids
+#   target_group_arn = module.prod_web_alb.alb_arn
+#   task_definition_arns = {
+#     for idx, task_def in var.task_definitions :
+#     task_def.family_name => module.ecs_task_definitions[idx].task_definition_arns
+#   }
+#   # Pass the mapped container ports
+#   container_ports = locals.container_ports
+#   cluster_name = module.ecs_cluster.cluster_name
+# }

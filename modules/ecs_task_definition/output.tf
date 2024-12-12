@@ -1,6 +1,6 @@
 # modules/ecs_task_definition/outputs.tf
 
-output "task_definition_arn" {
+output "task_definition_arns" {
   description = "ARN of the created task definition"
   value       = aws_ecs_task_definition.this.arn
 }
